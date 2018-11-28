@@ -1,3 +1,1 @@
-var thing_3 = 'Hello World'
-
-this is an error
+var thing3 = "Hola Chicos"
