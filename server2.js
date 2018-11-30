@@ -1,1 +1,0 @@
-var thing3 = "Hola Chicos"
