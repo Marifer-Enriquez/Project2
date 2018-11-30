@@ -1,0 +1,49 @@
+<!-- MyFirstHTML.html -->
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My First Page</title>
+</head>
+
+<body>
+
+
+<div class="site-header">
+    <ul>
+        <li class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></li>
+               <li class="header-button"><a href="/logout"><button type="button">Logout</button></a></li>
+    </ul>
+</div>
+
+
+  <!-- Header -->
+  <h1>Hello World!</h1>
+
+
+{{#each usuarios}}
+
+<ul class="info-list">
+                <li>Name: <span class="user-info">{{name}}</span>
+                    {{!-- <input type="text" name="name" value={{name}}> --}}
+                </li>
+                <li>Username: <span class="user-info">{{username}}</span>
+                    {{!-- <input type="text" name="username" value={{username}}> --}}
+                </li>
+                <li>Email: <span class="user-info">{{email}}</span>
+                    {{!-- <input type="email" name="email" value={{email}}> --}}
+                </li>
+                <!--<li>Password: <span class="user-info">{{password}}</span>
+                    <input type="text" name="username" value={{password}}>
+                </li>-->
+                {{!-- <li class="header-button edit-button"><button type="button">Edit</button></li>
+                <li class="header-button save-button"><button type="submit">Save</button></li> --}}
+</ul>
+          
+{{/each}}
+
+
+</body>
+
+</html>
