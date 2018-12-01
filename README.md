@@ -20,4 +20,8 @@
 * [ ] Create the Handler of Submit button in frontend_movies.js.
 * [ ] Create the `/api/moviesearch` Post route in `route/apiRoutes.js`.
 * [ ] Update server.js to pass the OMBD key to the apiRoutes
-* [ ] Install request package to call the OMBD API inside
+* [ ] Install `request` package to call the OMBD API inside.
+* [ ] Build the routines in `frontend_movies.js` to draw the movies in screen when searched and add the buttons.
+* [ ] Create the routes for the buttons `Movie Seen` and `Movie To Watch`
+* [ ] Create a common routine that search for the Movie and Add it locally in the Movie Model.
+* [ ] Update the common routine to build the entry in UserMovies Model.
