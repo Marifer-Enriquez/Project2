@@ -22,7 +22,7 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-require("./routes/apiRoutes")(app);
+require("./routes/apiRoutes")(app, process.env.OMBD_API_KEY);
 require("./routes/htmlRoutes")(app);
 
 var syncOptions = { force: false };

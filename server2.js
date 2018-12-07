@@ -1,1 +1,0 @@
-var thing_3 = 'Hello World'

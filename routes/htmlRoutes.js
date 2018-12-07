@@ -20,6 +20,13 @@ module.exports = function(app) {
     });
   });
 
+  // Load moviesearch page
+  app.get("/moviesearch/", function(req, res) {
+    res.render("moviesearch", {
+      msg: "Search Movie"
+    });
+  });
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
