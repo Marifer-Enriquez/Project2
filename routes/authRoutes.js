@@ -1,13 +1,7 @@
-// var alert = require('alert');
-
-// import alert from 'alert-node';
-// var swal = require('swal');
-
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var db = require("../models");
 var bcrypt = require("bcryptjs");
-// var path = require("path");
 
 module.exports = function(app) {
   // Login Route
@@ -21,7 +15,7 @@ module.exports = function(app) {
   );
 
   // User Logout Route
-  app.get("/logout", isLoggedIn, (request, response, next) => {
+  app.get("/logout", isLoggedIn, (request, response) => {
     request.logout();
     request.flash("success_msg", "You are logged out");
     response.redirect("/");
@@ -54,7 +48,9 @@ module.exports = function(app) {
         // result.array() will be the array containing the errors in
         // the following format:
         // {param: "name", msg: "Name is required", value: ""}
-        return response.status(422).json({ errors: result.array() });
+        return response.status(422).json({
+          errors: result.array()
+        });
       } else {
         console.log("Validation Passed");
         // Encrypt the password with sat and hash.
@@ -62,18 +58,44 @@ module.exports = function(app) {
         let hashedPassword = bcrypt.hashSync(password, salt);
         // Create The User if not already in the Database.
         // Check Logic Required
-        db.User.create({
-          name: name,
-          username: username,
-          password: hashedPassword,
-          salt: salt,
-          email: email
-        }).then(userDB => {
-          console.log(userDB);
-          passport.authenticate("local-signIn", {
-            failureRedirect: "/",
-            successRedirect: "/"
-          })(request, response);
+
+        console.log("aqui el username" + username);
+        db.User.findOne({
+          where: {
+            username: username
+          }
+        }).then(function(resultado) {
+          if (null !== resultado) {
+            console.log("USERNAME ALREADY EXISTS:", resultado.username);
+            // response.redirect("/");
+            response.json(null);
+          } else {
+            db.User.findOne({
+              where: {
+                email: email
+              }
+            }).then(function(resultado) {
+              if (null !== resultado) {
+                console.log("EMAIL ALREADY EXISTS:", resultado.email);
+                // response.redirect("/");
+                response.json(null);
+              } else {
+                db.User.create({
+                  name: name,
+                  username: username,
+                  password: hashedPassword,
+                  salt: salt,
+                  email: email
+                }).then(userDB => {
+                  console.log(userDB);
+                  passport.authenticate("local-signIn", {
+                    failureRedirect: "/",
+                    successRedirect: "/"
+                  })(request, response);
+                });
+              }
+            });
+          }
         });
       }
       // return response.json({ message: "Registration Success" });
@@ -119,12 +141,13 @@ module.exports = function(app) {
   }
 
   // function that allowes rout access only to logged in users ///
-  function notLoggedIn(request, response, next) {
-    if (!request.isAuthenticated()) {
-      return next();
-    }
-    response.redirect("/");
-  }
+  // function notLoggedIn(request, response, next) {
+  //   if (!request.isAuthenticated()) {
+  //     return next();
+  //   }
+  //   response.redirect("/");
+  // }
+
   // Serialize Sessions
   passport.serializeUser((user, done) => {
     done(null, user);
